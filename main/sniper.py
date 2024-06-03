@@ -14,6 +14,7 @@ MAX_WORKERS = 24  # Utilize 24 cores
 PRICE_THRESHOLD = 1_000_000  # Minimum price to consider
 UPPER_PRICE_LIMIT = 200_000_000  # Maximum price to consider
 MIN_ITEM_COUNT = 12  # Minimum number of the same item in JSON to consider
+MINIMUM_PROFIT = 1_000_000  # Minimum profit to consider
 
 # Reforges to remove
 REFORGES = [" ✦", "⚚ ", " ✪", "✪", "Stiff ", "Lucky ", "Jerry's ", "Dirty ", "Fabled ", "Suspicious ", "Gilded ", "Warped ", "Withered ", "Bulky ", "Stellar ", "Heated ", "Ambered ", "Fruitful ", "Magnetic ", "Fleet ", "Mithraic ", "Auspicious ", "Refined ", "Headstrong ", "Precise ", "Spiritual ", "Moil ", "Blessed ", "Toil ", "Bountiful ", "Candied ", "Submerged ", "Reinforced ", "Cubic ", "Warped ", "Undead ", "Ridiculous ", "Necrotic ", "Spiked ", "Jaded ", "Loving ", "Perfect ", "Renowned ", "Giant ", "Empowered ", "Ancient ", "Sweet ", "Silky ", "Bloody ", "Shaded ", "Gentle ", "Odd ", "Fast ", "Fair ", "Epic ", "Sharp ", "Heroic ", "Spicy ", "Legendary ", "Deadly ", "Fine ", "Grand ", "Hasty ", "Neat ", "Rapid ", "Unreal ", "Awkward ", "Rich ", "Clean ", "Fierce ", "Heavy ", "Light ", "Mythic ", "Pure ", "Smart ", "Titanic ", "Wise ", "Bizarre ", "Itchy ", "Ominous ", "Pleasant ", "Pretty ", "Shiny ", "Simple ", "Strange ", "Vivid ", "Godly ", "Demonic ", "Forceful ", "Hurtful ", "Keen ", "Strong ", "Superior ", "Unpleasant ", "Zealous "]
@@ -109,7 +110,7 @@ def process_auction(auction, results, now, lowest_prices, item_counts, new_data,
             # Only add to results if it meets criteria
             if lowest_price and PRICE_THRESHOLD <= starting_bid <= UPPER_PRICE_LIMIT and item_counts.get(index, 0) >= MIN_ITEM_COUNT:
                 profit = lowest_price - starting_bid - tax
-                if profit > 0:
+                if profit > MINIMUM_PROFIT:
                     results.append((auction['uuid'], auction['item_name'], starting_bid, lowest_price, profit))
 
 # Asynchronous data fetcher
